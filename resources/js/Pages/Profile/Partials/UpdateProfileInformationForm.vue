@@ -1,8 +1,8 @@
 <script setup>
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import BreezeInputError from "@/Components/InputError.vue";
+import BreezeLabel from "@/Components/Label.vue";
+import BreezeButton from "@/Components/Button.vue";
+import BreezeInput from "@/Components/Input.vue";
 import { Link, useForm, usePage } from '@inertiajs/vue3';
 
 defineProps({
@@ -18,6 +18,7 @@ const user = usePage().props.auth.user;
 
 const form = useForm({
     name: user.name,
+    username: user.username,
     email: user.email,
 });
 </script>
@@ -34,9 +35,9 @@ const form = useForm({
 
         <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">
             <div>
-                <InputLabel for="name" value="Name" />
+                <BreezeLabel for="name" value="Name" />
 
-                <TextInput
+                <BreezeInput
                     id="name"
                     type="text"
                     class="mt-1 block w-full"
@@ -46,13 +47,29 @@ const form = useForm({
                     autocomplete="name"
                 />
 
-                <InputError class="mt-2" :message="form.errors.name" />
+                <BreezeInputError class="mt-2" :message="form.errors.name" />
             </div>
 
             <div>
-                <InputLabel for="email" value="Email" />
+                <BreezeLabel for="username" value="Username" />
 
-                <TextInput
+                <BreezeInput
+                    id="username"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.username"
+                    required
+                    autofocus
+                    autocomplete="username"
+                />
+
+                <BreezeInputError class="mt-2" :message="form.errors.username" />
+            </div>
+
+            <div>
+                <BreezeLabel for="email" value="Email" />
+
+                <BreezeInput
                     id="email"
                     type="email"
                     class="mt-1 block w-full"
@@ -61,7 +78,7 @@ const form = useForm({
                     autocomplete="username"
                 />
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                <BreezeInputError class="mt-2" :message="form.errors.email" />
             </div>
 
             <div v-if="mustVerifyEmail && user.email_verified_at === null">
@@ -86,7 +103,7 @@ const form = useForm({
             </div>
 
             <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+                <BreezeButton :disabled="form.processing">Save</BreezeButton>
 
                 <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
                     <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Saved.</p>

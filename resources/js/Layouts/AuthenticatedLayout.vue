@@ -12,6 +12,20 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div>
+        <div v-if="$page.props.flash.message" class="bg-green-400">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between flex-warp">
+                    <div class="w-0 flex-1 flex items-center">
+                        <p class="ml-3 font-medium text-white truncate">
+                            <span class="md:hidden">{{ $page.props.flash.message }}</span>
+                            <span class="hidden md:inline">
+                                {{ $page.props.flash.message }}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="min-h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
@@ -31,6 +45,9 @@ const showingNavigationDropdown = ref(false);
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
+                                </NavLink>
+                                <NavLink :href="route('communities.index')" :active="route().current('communities.index')">
+                                    Community
                                 </NavLink>
                             </div>
                         </div>

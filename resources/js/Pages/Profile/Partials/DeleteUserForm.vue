@@ -1,10 +1,9 @@
 <script setup>
-import DangerButton from '@/Components/DangerButton.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import Modal from '@/Components/Modal.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import BreezeInputError from "@/Components/InputError.vue";
+import BreezeLabel from "@/Components/Label.vue";
+import BreezeButton from "@/Components/Button.vue";
+import BreezeInput from "@/Components/Input.vue";
+import ProfileModel from '@/Components/ProfileModel.vue';
 import { useForm } from '@inertiajs/vue3';
 import { nextTick, ref } from 'vue';
 
@@ -24,13 +23,13 @@ const confirmUserDeletion = () => {
 const deleteUser = () => {
     form.delete(route('profile.destroy'), {
         preserveScroll: true,
-        onSuccess: () => closeModal(),
+        onSuccess: () => closeProfileModel(),
         onError: () => passwordInput.value.focus(),
         onFinish: () => form.reset(),
     });
 };
 
-const closeModal = () => {
+const closeProfileModel = () => {
     confirmingUserDeletion.value = false;
 
     form.reset();
@@ -48,9 +47,9 @@ const closeModal = () => {
             </p>
         </header>
 
-        <DangerButton @click="confirmUserDeletion">Delete Account</DangerButton>
+        <BreezeButton @click="confirmUserDeletion">Delete Account</BreezeButton>
 
-        <Modal :show="confirmingUserDeletion" @close="closeModal">
+        <ProfileModel :show="confirmingUserDeletion" @close="closeProfileModel">
             <div class="p-6">
                 <h2 class="text-lg font-medium text-gray-900">
                     Are you sure you want to delete your account?
@@ -62,9 +61,9 @@ const closeModal = () => {
                 </p>
 
                 <div class="mt-6">
-                    <InputLabel for="password" value="Password" class="sr-only" />
+                    <BreezeLabel for="password" value="Password" class="sr-only" />
 
-                    <TextInput
+                    <BreezeInput
                         id="password"
                         ref="passwordInput"
                         v-model="form.password"
@@ -74,22 +73,22 @@ const closeModal = () => {
                         @keyup.enter="deleteUser"
                     />
 
-                    <InputError :message="form.errors.password" class="mt-2" />
+                    <BreezeInputError :message="form.errors.password" class="mt-2" />
                 </div>
 
                 <div class="mt-6 flex justify-end">
-                    <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
+                    <BreezeButton @click="closeProfileModel"> Cancel </BreezeButton>
 
-                    <DangerButton
+                    <BreezeButton
                         class="ml-3"
                         :class="{ 'opacity-25': form.processing }"
                         :disabled="form.processing"
                         @click="deleteUser"
                     >
                         Delete Account
-                    </DangerButton>
+                    </BreezeButton>
                 </div>
             </div>
-        </Modal>
+        </ProfileModel>
     </section>
 </template>

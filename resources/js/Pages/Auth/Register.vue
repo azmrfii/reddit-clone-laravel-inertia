@@ -1,13 +1,14 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import InputLabel from '@/Components/Label.vue';
+import PrimaryButton from '@/Components/Button.vue';
+import TextInput from '@/Components/Input.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
     name: '',
+    username: '',
     email: '',
     password: '',
     password_confirmation: '',
@@ -41,6 +42,22 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
 
+            <div>
+                <InputLabel for="username" value="Username" />
+
+                <TextInput
+                    id="username"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.username"
+                    required
+                    autofocus
+                    autocomplete="username"
+                />
+
+                <InputError class="mt-2" :message="form.errors.username" />
+            </div>
+
             <div class="mt-4">
                 <InputLabel for="email" value="Email" />
 
@@ -50,7 +67,7 @@ const submit = () => {
                     class="mt-1 block w-full"
                     v-model="form.email"
                     required
-                    autocomplete="username"
+                    autocomplete="email"
                 />
 
                 <InputError class="mt-2" :message="form.errors.email" />
